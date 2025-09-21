@@ -1,10 +1,11 @@
 const express=require('express')
-const {userLogin, userRegister}=require('../controller/user.controller')
+const { addWeb, getWeb, deleteWeb, updateWeb } = require('../controller/web.controller')
 const router=express.Router()
 
 
-router.get("/add",userLogin)
-router.get("/all",userRegister)
-router.get("/delete/:id",userRegister)
+router.post("/add",addWeb)
+router.get("/all",getWeb)
+router.delete("/delete/:id",deleteWeb)
+router.put("/update/:id",updateWeb)
 
 module.exports =router

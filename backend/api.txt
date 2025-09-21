@@ -1,0 +1,18 @@
+          MAIN URL                 URL      METHOD      INPUT     OUTPUT
+---------------------------------------------------------------------------
+                
+http://localhost:/2000/user
+                           /login    POST
+                           /register POST
+                           /profile  GET
+http://localhost:/2000/web
+                           /add        POST
+                           /all        GET
+                           /delete/:id DELETE
+                           /update/:id PUT
+http://localhost:/2000/order
+                           /create  POST
+                           /view    GET
+http://localhost:/2000/wishlist
+                           /add-item        POST
+                           /all-items  GET
