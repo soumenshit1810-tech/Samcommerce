@@ -1,30 +1,55 @@
-let User = require('../models/order.model')
-const bcrypt = require('bcrypt')
+let User = require('../models/user.model')
+const bcrypt = require('bcryptjs')
 
 module.exports.userRegister = async (req, res) => {
-    let { name, email, password } = request.body
+    let { name, email, password } = req.body
     if (!name || !email || !password) {
         return res.status(400).json({ message: "All Fields Are Required", success: false })
     } else {
         try {
             let existingUser = await User.findOne({ email: email })
+            console.log(existingUser);
+
             if (existingUser) {
-                return res.status(209).json({ message: "User Already Exists", success: false })
+                return res.status(409).json({ message: "User Already Exists", success: false })
             }
-            let hasshedPassword = bcrypt.hash(password, 1123467)
+            let hasshedPassword = await bcrypt.hashSync(password, 4)
             let newUser = await User.create({
                 name,
                 email,
                 password: hasshedPassword
             })
-            return res.status(201).json({ message: "User Registared Successfully!", success: true })
+            delete newUser._doc.password
+            return res.status(201).json({ message: "User Registared Successfully!", success: true, user: newUser })
         } catch (error) {
+            console.log(error);
             return res.status(500).json({ message: "Internal Servar Problem", success: false })
         }
     }
 }
-module.exports.userLogin = (req, res) => {
-    return res.send("User login logic")
+module.exports.userLogin = async (req, res) => {
+    let { email, password } = req.body
+    if (!email || !password) {
+        return res.status(400).json({ message: "All Fields Are Required", success: false })
+    } else {
+        try {
+            let user = await User.findOne({ email: email })
+            if (!user) {
+                return res.status(404).json({ message: "User Not Found!", success: false })
+            } else {
+                let isMatch = await bcrypt.compare(password, user.password)
+                if (!isMatch) {
+                    return res.status(401).json({ message: "User Not Found!", success: false })
+                }
+                delete user._doc.password
+                return res.status(201).json({ message: "User LoggedIn Succesfully", success: true, user })
+            }
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({ message: "Internal Servar Problem", success: false })
+        }
+    }
+
 }
 module.exports.userProfile = (req, res) => {
     return res.send("User Profile logic")
