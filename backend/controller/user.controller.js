@@ -49,7 +49,7 @@ module.exports.userLogin = async (req, res) => {
                     name:user.name,
                     email:user.email
                 }
-                let token=await jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:"30d"})
+                let token=await jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:"30d", algorithm:"none"})
                 return res.status(200).json({ message: "User LoggedIn Succesfully", success: true, user,token })
             }
         } catch (error) {

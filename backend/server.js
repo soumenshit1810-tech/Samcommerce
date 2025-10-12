@@ -8,7 +8,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
-const userRouter = require('./routes/user.router')
+const userRouter = require('./routes/user.route')
 // const webRouter = require('./routes/web.route')
 // const orderRouter = require('./routes/web.route')
 // const wishlistRouter = require('./routes/wishlist.route')
