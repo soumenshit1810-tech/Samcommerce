@@ -1,6 +1,6 @@
 let User = require('../models/user.model')
 const bcrypt = require('bcryptjs')
-const jwt =require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
 module.exports.userRegister = async (req, res) => {
     let { name, email, password } = req.body
@@ -44,13 +44,13 @@ module.exports.userLogin = async (req, res) => {
                 }
                 delete user._doc.password
 
-                let payload={
-                    _id:user._id,
-                    name:user.name,
-                    email:user.email
+                let payload = {
+                    _id: user._id,
+                    name: user.name,
+                    email: user.email
                 }
-                let token=await jwt.sign(payload,process.env.JWT_SECRET,{expiresIn:"30d", algorithm:"none"})
-                return res.status(200).json({ message: "User LoggedIn Succesfully", success: true, user,token })
+                let token = await jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "30d", algorithm: "none" })
+                return res.status(200).json({ message: "User LoggedIn Succesfully", success: true, user, token })
             }
         } catch (error) {
             console.log(error);
@@ -60,5 +60,7 @@ module.exports.userLogin = async (req, res) => {
 
 }
 module.exports.userProfile = (req, res) => {
-    return res.send("User Profile logic")
+    let user = req.user
+    let token = req.headers?.authorization;
+    return res.send({ message: "User Profile", user, token })
 }
