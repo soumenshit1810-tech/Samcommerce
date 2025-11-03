@@ -1,5 +1,5 @@
 const express=require('express')
-const { addWeb, getWeb, deleteWeb, updateWeb } = require('../controller/web.controller')
+const { addWeb, getWeb, deleteWeb, updateWeb } = require('../controller/web.controller.js')
 const router=express.Router()
 
 

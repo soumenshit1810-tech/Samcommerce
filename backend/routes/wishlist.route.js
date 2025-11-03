@@ -1,5 +1,5 @@
 const express=require('express')
-const { addItemWishlist, viewItemsWishlist } = require('../controller/wishlist.controller')
+const { addItemWishlist, viewItemsWishlist } = require('../controller/wishlist.controller.js')
 const router=express.Router()
 
 
