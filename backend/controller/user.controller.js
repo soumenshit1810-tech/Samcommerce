@@ -56,6 +56,7 @@ module.exports.userLogin = async (req, res) => {
         } catch (error) {
             console.log(error);
             return res.status(500).json({ message: "Internal Servar Problem", success: false })
+           
         }
     }
 
@@ -66,4 +67,7 @@ module.exports.userProfile = async (req, res) => {
     let token = req.headers?.authorization?.split(" ")[1];
 
     return res.send({ message: "User Profile", user, token })
+    // data base fetching logic here ...connected with middleware server auth.middleware.js to get user data to req.user 
+    // injecting data into req object using middleware concept for fuether use connect gdata base
+    // databse fetching data connected to auth.middleware.js database connection 
 }
